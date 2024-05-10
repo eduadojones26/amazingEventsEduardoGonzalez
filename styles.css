@@ -27,6 +27,16 @@ nav img{
     width: 70%;
     height: auto;
 }
+#targetas img{
+    width: auto;
+    height: 25vh;
+
+}
+.card-text {
+    width: auto;
+    height: 15vh;
+}
+
 #cardeta{
     height: 80%;
     width: 100%;
