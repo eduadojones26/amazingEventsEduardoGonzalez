@@ -18,7 +18,9 @@ nav img{
     object-fit: cover;
 }
 
-
+.mensaje{
+    padding: 10 px;
+}
 .caja{
     display: flex;
     justify-content: center;
@@ -37,9 +39,9 @@ nav img{
     height: 15vh;
 }
 
-#cardeta{
-    height: 80%;
-    width: 100%;
+#carde{
+    height: 50%;
+    width: 50%;
 }
 footer {
    

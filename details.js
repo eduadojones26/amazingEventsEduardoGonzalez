@@ -1,3 +1,8 @@
+let detalleEve = window.location.href;
+detalleEve = new URL(detalleEve).searchParams.get("value")
+console.log(detalleEve);
+
+// Datos del arreglo
 const data = {
     currentDate: "2023-01-01",
     events: [
@@ -196,89 +201,39 @@ const data = {
 };
 
 let events = data.events;
-let targetas = document.getElementById("targetas");
 
-// Pintar todas las tarjetas 
-pintarcard(events, targetas);
 
-function pintarcard(array, div) {
-    div.innerHTML = ''; // Limpiar contenido previo
-    array.forEach(event => targetaCliente(event, div));
-}
-
-// Crear tarjeta individual
-function targetaCliente(event, divPadre) {
-    let newCard = document.createElement("div");
-    newCard.className = "card";
-    newCard.style.width = "15rem";
-    newCard.innerHTML = `
-        <img src="${event.image}" class="card-img-top" alt="${event.name}">
-        <div class="card-body">
-            <h5 class="card-title">${event.name}</h5>
-            <p class="card-text">${event.description}.</p>
-            <div class="container d-flex flex-row-reverse justify-content-between">
-                <a href="#" onclick="detalle('${event._id}')" class="btn btn-primary">Go Details</a>
-                <p>Price: ${event.price}</p>
-            </div>
-        </div>`;
-    divPadre.appendChild(newCard);
-}
-
-function detalle(id) {
-    window.location.href = `http://127.0.0.1:5500/details.html?value=${id}`;
-}
-
-let categoria = document.getElementById("categoria");
-pintarche(events, categoria);
-
-function pintarche(events, categoria) {
-    let uniqueCategories = Array.from(new Set(events.map(event => event.category)));
-    uniqueCategories.forEach(category => {
-        let newChe = document.createElement("div");
-        newChe.innerHTML = `
-            <div class="container d-flex justify-content-between">
-                <div class="container align-content-start flex-wrap">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="${category}" id="${category}">
-                        <label class="form-check-label" for="${category}">
-                            ${category}
-                        </label>
+function displayEventDetails(event) {
+    let cardeta = document.getElementById("cardeta");
+    cardeta.innerHTML = `
+        <div id="carde" class="card mb-3" style="max-width: 540px;">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <img src="${event.image}" class="img-fluid rounded-start" alt="${event.name}">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">${event.name}</h5>
+                        <p class="card-text">${event.description}</p>
+                        <p class="card-text"><small class="text-body-secondary">Date: ${event.date}</small></p>
+                        <p class="card-text"><small class="text-body-secondary">Place: ${event.place}</small></p>
+                        <p class="card-text"><small class="text-body-secondary">Capacity: ${event.capacity}</small></p>
+                        ${event.assistance ? `<p class="card-text"><small class="text-body-secondary">Assistance: ${event.assistance}</small></p>` : ''}
+                        ${event.estimate ? `<p class="card-text"><small class="text-body-secondary">Estimate: ${event.estimate}</small></p>` : ''}
+                        <p class="card-text"><small class="text-body-secondary">Price: $${event.price}</small></p>
                     </div>
                 </div>
-            </div>`;
-        categoria.appendChild(newChe);
-    });
-
-    document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
-        checkbox.addEventListener("change", () => filtrarTarjetas(events));
-    });
-
-    let searchInput = document.getElementById("searchInput");
-    searchInput.addEventListener("keyup", () => filtrarTarjetas(events));
+            </div>
+        </div>
+    `;
 }
 
-function filtrarTarjetas(events) {
-    let checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
-    let categoriasSeleccionadas = Array.from(checkboxes).map(checkbox => checkbox.id);
+// encuentra el evento por el ID
+let selectedEvent = events.find(event => event._id === detalleEve);
 
-    let searchInput = document.getElementById("searchInput");
-    let searchTerm = searchInput.value.trim().toLowerCase();
 
-    let targetas = document.getElementById("targetas");
-    targetas.innerHTML = "";
-
-    let emptySearchMessage = document.getElementById("emptySearchMessage");
-    let foundResults = false;
-
-    events.forEach(event => {
-        let matchesCategory = categoriasSeleccionadas.length === 0 || categoriasSeleccionadas.includes(event.category);
-        let matchesSearchTerm = event.name.toLowerCase().includes(searchTerm) || event.description.toLowerCase().includes(searchTerm);
-
-        if (matchesCategory && matchesSearchTerm) {
-            targetaCliente(event, targetas);
-            foundResults = true;
-        }
-    });
-
-    emptySearchMessage.style.display = foundResults ? "none" : "block";
+if (selectedEvent) {
+    displayEventDetails(selectedEvent);
+} else {
+    console.error("Event not found");
 }

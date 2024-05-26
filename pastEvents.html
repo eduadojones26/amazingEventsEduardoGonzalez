@@ -94,48 +94,30 @@
 
 
         <!-- check box y form de buscar  -->
-        <div class="container d-flex justify-content-between">
-            <div class="container  d-flex flex-wrap align-items-center">
-                <div class=" form-check ">
-                    <input class=" form-check-input" type="checkbox" value="" id="1" checked>
-                    <label class="form-check-label" for="1">
-                        Category
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="2" checked>
-                    <label class="form-check-label" for="2">
-                        Category
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="3" checked>
-                    <label class="form-check-label" for="3">
-                        Category
-                    </label>
-                </div>
-                <div class="form-check ">
-                    <input class="form-check-input" type="checkbox" value="" id="4" checked>
-                    <label class="form-check-label" for="4">
-                        Category
-                    </label>
-                </div>
-
+        <div class="container align-items-center">
+            
+            <div id="categoria" class="container d-flex flex-wrap  justify-content-between">
+                
             </div>
+
             <div class="container-fluid d-flex justify-content-end ">
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2 w-75" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
+                <form class="d-flex align-items-center" role="search">
+                    <label  for="searchInput">Find your favorite event</label>
+                    <input id="searchInput"  class="form-control me-2 w-75" type="search" placeholder="Search" aria-label="Search">
+                  
+
                 </form>
+                <div id="emptySearchMessage" class="alert alert-info" style="display: none;">
+                    No se encontraron resultados para la búsqueda.
+                </div>
             </div>
         </div>
 
 
 
-
         <!-- targetas de eventos  -->
         <div class="container">
-            <div id="targetas" class="container d-flex flex-wrap justify-content-around">
+            <div id="targetas" class="container d-flex flex-wrap grid gap-3 justify-content-around">
 
             </div>
         </div>

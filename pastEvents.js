@@ -208,30 +208,151 @@ for (let i = 0; i < events.length; i++) {
     }
 }
 
-pintarcard(pasado, targetas)
+pintarcard(pasado, targetas);
 
-function pintarcard(targetas) {
+function pintarcard(array, div) {
+    div.innerHTML = ''; // Limpiar contenido previo
+    array.forEach(event => targetaCliente(event, div));
+}
+
+// Crear tarjeta individual
+function targetaCliente(event, divPadre) {
+    let newCard = document.createElement("div");
+    newCard.className = "card";
+    newCard.style.width = "15rem";
+    newCard.innerHTML = `
+        <img src="${event.image}" class="card-img-top" alt="${event.name}">
+        <div class="card-body">
+            <h5 class="card-title">${event.name}</h5>
+            <p class="card-text">${event.description}.</p>
+            <div class="container d-flex flex-row-reverse justify-content-between">
+                <a href="#" onclick="detalle('${event._id}')" class="btn btn-primary">Go Details</a>
+                <p>Price: ${event.price}</p>
+            </div>
+        </div>`;
+    divPadre.appendChild(newCard);
+}
+
+function detalle(id) {
+    window.location.href = `http://127.0.0.1:5500/details.html?value=${id}`;
+}
+
+let categoria = document.getElementById("categoria");
+pintarche(pasado, categoria);
+
+function pintarche(pasado, categoria) {
+    let uniqueCategories = Array.from(new Set(pasado.map(event => event.category)));
+    uniqueCategories.forEach(category => {
+        let newChe = document.createElement("div");
+        newChe.innerHTML = `
+            <div class="container d-flex justify-content-between">
+                <div class="container align-content-start flex-wrap">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="${category}" id="${category}">
+                        <label class="form-check-label" for="${category}">
+                            ${category}
+                        </label>
+                    </div>
+                </div>
+            </div>`;
+        categoria.appendChild(newChe);
+    });
+
+    document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+        checkbox.addEventListener("change", () => filtrarTarjetas(pasado));
+    });
+
+    let searchInput = document.getElementById("searchInput");
+    searchInput.addEventListener("keyup", () => filtrarTarjetas(pasado));
+}
+
+function filtrarTarjetas(pasado) {
+    let checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+    let categoriasSeleccionadas = Array.from(checkboxes).map(checkbox => checkbox.id);
+
+    let searchInput = document.getElementById("searchInput");
+    let searchTerm = searchInput.value.trim().toLowerCase();
+
+    let targetas = document.getElementById("targetas");
+    targetas.innerHTML = "";
+
+    let emptySearchMessage = document.getElementById("emptySearchMessage");
+    let foundResults = false;
+
+    pasado.forEach(event => {
+        let matchesCategory = categoriasSeleccionadas.length === 0 || categoriasSeleccionadas.includes(event.category);
+        let matchesSearchTerm = event.name.toLowerCase().includes(searchTerm) || event.description.toLowerCase().includes(searchTerm);
+
+        if (matchesCategory && matchesSearchTerm) {
+            targetaCliente(event, targetas);
+            foundResults = true;
+        }
+    });
+
+    emptySearchMessage.style.display = foundResults ? "none" : "block";
+}
+
+
+/*function pintarcard(pasado, targetas) {
     for (let i = 0; i < pasado.length; i++) {
-        targetaCliente(pasado[i]);
-
+        targetaCliente(pasado[i], targetas);
     }
 }
 
-function targetaCliente(targeta) {
-    let newCard = document.createElement("div")
-
+function targetaCliente(targeta, targetas) {
+    let newCard = document.createElement("div");
     newCard.innerHTML = `
     <div class="card" style="width: 15rem;">
-                    <img src="${targeta.image}" class="card-img-top" alt="">
-                    <div class="card-body">
-                        <h5 class="card-title">"${targeta.name}"</h5>
-                        <p class="card-text">"${targeta.description}".</p>
-                        <div class="container d-flex flex-row-reverse justify-content-between ">
-                            <a href="details.html" class="btn btn-primary">Go Details</a>
-                            <p>price: ${targeta.price}</p>
-                        </div>
-                    </div>
-                </div>`
-    targetas.appendChild(newCard)
+        <img src="${targeta.image}" class="card-img-top" alt="">
+        <div class="card-body">
+            <h5 class="card-title">${targeta.name}</h5>
+            <p class="card-text">${targeta.description}.</p>
+            <div class="container d-flex flex-row-reverse justify-content-between">
+                <a href="details.html" class="btn btn-primary">Go Details</a>
+                <p>price: ${targeta.price}</p>
+            </div>
+        </div>
+    </div>`;
+    targetas.appendChild(newCard);
 }
 
+let categoria = document.getElementById("categoria");
+
+pintarche(pasado, categoria);
+
+function pintarche(pasado, categoria) {
+    let uniqueCategories = new Set(pasado.map(event => event.category));
+    for (let category of uniqueCategories) {
+        let newChe = document.createElement("div");
+        newChe.innerHTML =` 
+        <div class="container d-flex justify-content-between">
+            <div class="container align-content-start flex-wrap">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="#" id="${category}">
+                    <label class="form-check-label" for="${category}">
+                        ${category}
+                    </label>
+                </div>
+            </div>
+        </div>`;
+        categoria.appendChild(newChe);
+        let checkbox = newChe.querySelector(`input[type="checkbox"]`);
+        checkbox.addEventListener("change", function() {
+            filtrarTarjetas(pasado);
+        });
+    }
+}
+
+function filtrarTarjetas(pasado) {
+    let checkboxes = document.querySelectorAll(`input[type="checkbox"]:checked`);
+    let categoriasSeleccionadas = Array.from(checkboxes).map(checkbox => checkbox.id);
+    
+    let targetas = document.getElementById("targetas");
+    targetas.innerHTML = ""; 
+    
+    for (let event of pasado) {
+        if (categoriasSeleccionadas.includes(event.category)) {
+            targetaCliente(event, targetas);
+        }
+    }
+}*/

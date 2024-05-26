@@ -196,9 +196,7 @@ const data = {
 };
 
 let events = data.events
-
 let targetas = document.getElementById("targetas")
-
 
 let futuro = [];
 
@@ -208,30 +206,87 @@ for (let i = 0; i < events.length; i++) {
     }
 }
 
-pintarcard(futuro, targetas)
+pintarcard(futuro, targetas);
 
-function pintarcard(targetas) {
-    for (let i = 0; i < futuro.length; i++) {
-        targetaCliente(futuro[i]);
-
-    }
+function pintarcard(array, div) {
+    div.innerHTML = ''; // Limpiar contenido previo
+    array.forEach(event => targetaCliente(event, div));
 }
 
-function targetaCliente(targeta) {
-    let newCard = document.createElement("div")
-
+// Crear tarjeta individual
+function targetaCliente(event, divPadre) {
+    let newCard = document.createElement("div");
+    newCard.className = "card";
+    newCard.style.width = "15rem";
     newCard.innerHTML = `
-    <div class="card" style="width: 15rem;">
-                    <img src="${targeta.image}" class="card-img-top" alt="">
-                    <div class="card-body">
-                        <h5 class="card-title">"${targeta.name}"</h5>
-                        <p class="card-text">"${targeta.description}".</p>
-                        <div class="container d-flex flex-row-reverse justify-content-between ">
-                            <a href="details.html" class="btn btn-primary">Go Details</a>
-                            <p>price: ${targeta.price}</p>
-                        </div>
+        <img src="${event.image}" class="card-img-top" alt="${event.name}">
+        <div class="card-body">
+            <h5 class="card-title">${event.name}</h5>
+            <p class="card-text">${event.description}.</p>
+            <div class="container d-flex flex-row-reverse justify-content-between">
+                <a href="#" onclick="detalle('${event._id}')" class="btn btn-primary">Go Details</a>
+                <p>Price: ${event.price}</p>
+            </div>
+        </div>`;
+    divPadre.appendChild(newCard);
+}
+
+function detalle(id) {
+    window.location.href = `http://127.0.0.1:5500/details.html?value=${id}`;
+}
+
+let categoria = document.getElementById("categoria");
+pintarche(futuro, categoria);
+
+function pintarche(futuro, categoria) {
+    let uniqueCategories = Array.from(new Set(futuro.map(event => event.category)));
+    uniqueCategories.forEach(category => {
+        let newChe = document.createElement("div");
+        newChe.innerHTML = `
+            <div class="container d-flex justify-content-between">
+                <div class="container align-content-start flex-wrap">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="${category}" id="${category}">
+                        <label class="form-check-label" for="${category}">
+                            ${category}
+                        </label>
                     </div>
-                </div>`
-    targetas.appendChild(newCard)
+                </div>
+            </div>`;
+        categoria.appendChild(newChe);
+    });
+
+    document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+        checkbox.addEventListener("change", () => filtrarTarjetas(futuro));
+    });
+
+    let searchInput = document.getElementById("searchInput");
+    searchInput.addEventListener("keyup", () => filtrarTarjetas(futuro));
+}
+
+function filtrarTarjetas(futuro) {
+    let checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+    let categoriasSeleccionadas = Array.from(checkboxes).map(checkbox => checkbox.id);
+
+    let searchInput = document.getElementById("searchInput");
+    let searchTerm = searchInput.value.trim().toLowerCase();
+
+    let targetas = document.getElementById("targetas");
+    targetas.innerHTML = "";
+
+    let emptySearchMessage = document.getElementById("emptySearchMessage");
+    let foundResults = false;
+
+    futuro.forEach(event => {
+        let matchesCategory = categoriasSeleccionadas.length === 0 || categoriasSeleccionadas.includes(event.category);
+        let matchesSearchTerm = event.name.toLowerCase().includes(searchTerm) || event.description.toLowerCase().includes(searchTerm);
+
+        if (matchesCategory && matchesSearchTerm) {
+            targetaCliente(event, targetas);
+            foundResults = true;
+        }
+    });
+
+    emptySearchMessage.style.display = foundResults ? "none" : "block";
 }
 
