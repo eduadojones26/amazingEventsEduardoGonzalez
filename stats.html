@@ -36,7 +36,6 @@
         </nav>
     </header>
 
-
     <main>
         <!-- carrusel con imagenes  -->
         <div id="carouselExampleCaptions" class="carousel slide">
@@ -102,39 +101,33 @@
             </button>
         </div>
 
-
+        <!-- tabla de estadisticas  -->
         <div class="container">
 
             <table class="table table-bordered caption-top">
                 <caption>Events statistic</caption>
                 <thead>
-                    
+
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Events with highest % of asistence</th>
-                        <th scope="col">Events with lowest % of asistence</th>
+                        <th scope="col">Events with highest % of assistance</th>
+                        <th scope="col">Events with lowest % of assistance</th>
                         <th scope="col">Events with larger capacity</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="events-statistics">
                     <tr>
                         <th scope="row">1</th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td id="highest-attendance"></td>
+                        <td id="lowest-attendance"></td>
+                        <td id="largest-capacity"></td>
                     </tr>
                 </tbody>
             </table>
             <table class="table table-bordered caption-top">
                 <caption>Up coming events statistics by category</caption>
                 <thead>
-                    
+
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Categories</th>
@@ -142,25 +135,14 @@
                         <th scope="col">Percentage of assistance</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
+                <tbody id="upcoming-stats">
+                    <!-- Rows will be generated dynamically -->
                 </tbody>
             </table>
             <table class="table table-bordered caption-top">
                 <caption>Past events statistics by category</caption>
                 <thead>
-                   
+
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Categories</th>
@@ -168,19 +150,8 @@
                         <th scope="col">Percentage of assistance</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
+                <tbody id="past-stats">
+                    <!-- Rows will be generated dynamically -->
                 </tbody>
             </table>
         </div>
@@ -210,5 +181,8 @@
         </div>
 
     </footer>
-
+   
+    <script src="./stasts.js"></script>
 </body>
+
+</html>
