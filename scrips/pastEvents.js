@@ -1,4 +1,4 @@
-import * as funcionesTotales from "./modules.js"
+import * as funcionesTotales from "/scrips/modules/functions.js"
 
 const urlbase = "https://aulamindhub.github.io"
 const urlevetos = urlbase + "/amazing-api/events.json"

@@ -11,9 +11,9 @@ export function targetaCliente(event, divPadre) {
         <img src="${event.image}" class="card-img-top" alt="${event.name}">
         <div class="card-body">
             <h5 class="card-title">${event.name}</h5>
-            <p class="card-text">${event.description}.</p>
+            <p class="card-text cardText">${event.description}.</p>
             <div class="container d-flex flex-row-reverse justify-content-between">
-            <a href="details.html?value=${event._id}" class="btn btn-primary">Go Details</a>
+            <a href="/pages/details.html?value=${event._id}" class="btn btn-primary">Go Details</a>
                 <p>Price: ${event.price}</p>
             </div>
         </div>`;

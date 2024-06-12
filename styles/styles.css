@@ -34,7 +34,7 @@ nav img{
     height: 25vh;
 
 }
-.card-text {
+.cardText{
     width: auto;
     height: 15vh;
 }
@@ -42,6 +42,13 @@ nav img{
 #carde{
     height: 50%;
     width: 50%;
+}
+#cardeta{
+    min-height: auto;
+}
+.imagenDetails{
+    height: 100%;
+   object-fit: cover;
 }
 footer {
    

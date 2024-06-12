@@ -30,7 +30,7 @@ function displayEventDetails(event) {
     cardeta.innerHTML = `
         <div class="card mb-3" style="max-width: 540px;">
             <div class="row g-0">
-                <div class="col-md-4">
+                <div class="card mb-3">
                     <img src="${event.image}" class="img-fluid rounded-start" alt="${event.name}">
                 </div>
                 <div class="col-md-8">
